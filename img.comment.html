@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free API AI Comment Generator — Responsive Tool</title>
+  <meta name="description" content="Free AI Comment Generator tool — responsive, SEO-optimised, with ad spaces and easy Eon Ads code insertion. Select tool level, tone, and generate comments or use your own API.">
+  <meta name="keywords" content="AI comment generator, free AI API, responsive tool, SEO, eon ads, comment generator">
+  <meta name="robots" content="index, follow">
+
+  <style>
+    :root{
+      --max-w:1100px;
+      --accent:#0d6efd;
+      --accent-2:#0a58ca;
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --muted:#6c757d;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:linear-gradient(180deg,var(--bg),#eef6ff); color:#0b1720}
+    .wrap{max-width:var(--max-w);margin:24px auto;padding:18px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    header h1{font-size:1.125rem;margin:0}
+    header p{margin:0;color:var(--muted);font-size:0.9rem}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 20px rgba(11,22,39,0.06)}
+    label{display:block;font-size:0.85rem;margin-bottom:6px;color:var(--muted)}
+    select,input,textarea{width:100%;padding:10px;border:1px solid #e6e9ef;border-radius:8px;font-size:0.95rem;background:transparent}
+    textarea{resize:vertical}
+    .row{display:flex;gap:12px}
+    .row > *{flex:1}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+    .btn.secondary{background:#6c757d}
+    .muted{color:var(--muted);font-size:0.9rem}
+    .preview{min-height:140px;padding:12px;border-radius:8px;background:#fbfdff;border:1px dashed #e6eef8}
+    .ad-slot{min-height:90px;border-radius:8px;border:1px dashed #cfd8e3;display:flex;align-items:center;justify-content:center;color:#6b7280}
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:0.85rem}
+    .small{font-size:0.85rem}
+    .flex{display:flex;gap:8px;align-items:center}
+    .chip{padding:6px 10px;border-radius:999px;background:#f1f5f9;border:1px solid #e6eef8;font-weight:600}
+    .copy{cursor:pointer}
+    .controls-group{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:600px){.controls-group{grid-template-columns:1fr}}
+    .result-item{padding:10px;border-radius:8px;margin-top:8px;background:#fff;border:1px solid #eef5ff}
+    .small-btn{padding:6px 8px;border-radius:8px;font-size:0.9rem}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Free API "AI Comment Generator"</h1>
+        <p class="muted">Responsive, SEO-friendly tool with ad placeholders and simple Eon Ads integration.</p>
+      </div>
+      <div class="flex">
+        <div class="chip">SEO-ready</div>
+        <div class="chip">No server needed</div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- Left: main tool -->
+      <section class="card">
+        <h2 style="margin-top:0;font-size:1rem">Generate Comments</h2>
+        <p class="muted small">Choose level & tone. Optionally use your own Free API URL. Built-in local generator works offline.</p>
+
+        <div style="margin-top:12px" class="controls-group">
+          <div>
+            <label for="level">Tool level</label>
+            <select id="level">
+              <option value="basic">Basic — short & safe</option>
+              <option value="standard" selected>Standard — balanced</option>
+              <option value="advanced">Advanced — creative & longer</option>
+              <option value="custom">Custom — set tokens</option>
+            </select>
+          </div>
+
+          <div id="customTokensRow" style="display:none">
+            <label for="tokens">Max tokens</label>
+            <input id="tokens" type="number" min="16" max="2000" value="150">
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="controls-group">
+          <div>
+            <label for="tone">Tone</label>
+            <select id="tone">
+              <option value="friendly">Friendly</option>
+              <option value="professional" selected>Professional</option>
+              <option value="witty">Witty</option>
+              <option value="concise">Concise</option>
+              <option value="enthusiastic">Enthusiastic</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="num"># of comments</label>
+            <select id="num">
+              <option value="1">1</option>
+              <option value="3" selected>3</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label for="context">Context / Topic (short)</label>
+          <input id="context" placeholder="e.g. Product launch, blog post, Instagram photo">
+        </div>
+
+        <div style="margin-top:12px">
+          <label for="apiUrl">Optional: Use your Free API (paste POST endpoint)</label>
+          <input id="apiUrl" placeholder="https://your-free-api.example/endpoint">
+          <div class="small muted" style="margin-top:6px">Leave empty to use the built-in local generator (no external requests).</div>
+        </div>
+
+        <div style="margin-top:12px" class="row">
+          <button id="generateBtn" class="btn">Generate</button>
+          <button id="clearBtn" class="btn secondary">Clear</button>
+        </div>
+
+        <hr style="margin:14px 0;border:none;border-top:1px solid #eef3fb">
+
+        <div>
+          <label>Preview</label>
+          <div id="preview" class="preview" aria-live="polite">No comments yet — click <strong>Generate</strong>.</div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="small muted">Unique tool code:</div>
+          <div id="unik" class="chip">—</div>
+          <button id="genUnik" class="btn small-btn" style="background:var(--accent-2)">Generate code</button>
+          <button id="copyUnik" class="btn small-btn" style="background:#198754">Copy</button>
+        </div>
+
+        <div style="margin-top:12px">
+          <label>Embed snippet (example)</label>
+          <textarea id="embed" readonly rows="3"><!-- Embed code will appear here --></textarea>
+          <div class="small muted" style="margin-top:6px">Use the unique code to identify installs or track referrals.</div>
+        </div>
+
+      </section>
+
+      <!-- Right: sidebar -->
+      <aside>
+        <div class="card" style="margin-bottom:16px">
+          <h3 style="margin:0;font-size:0.95rem">Tool settings & SEO</h3>
+          <div style="margin-top:12px">
+            <label for="pageTitle">Page Title (SEO)</label>
+            <input id="pageTitle" value="Free API AI Comment Generator — Responsive Tool">
+          </div>
+          <div style="margin-top:12px">
+            <label for="metaDesc">Meta description</label>
+            <input id="metaDesc" value="Generate engaging comments with selectable levels and tones. Includes ad placeholders and easy Eon Ads integration.">
+          </div>
+          <div style="margin-top:12px">
+            <label for="adCode">Eon Ads Code (paste your script)</label>
+            <textarea id="adCode" rows="4" placeholder="Paste Eon Ads script here — it will be injected into ad slots"></textarea>
+            <div class="small muted" style="margin-top:6px">The demo will not load external ad scripts in this offline file. When you deploy, paste your eon Ads script and it will appear in the ad placeholders.</div>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button id="injectAds" class="btn">Inject Ad Code</button>
+            <button id="downloadBtn" class="btn" style="background:#0a58ca">Download HTML</button>
+          </div>
+        </div>
+
+        <div class="card ad-slot" id="adTop">Ad slot — paste Eon Ads code in sidebar to inject here</div>
+
+        <div style="height:16px"></div>
+
+        <div class="card" style="padding:12px">
+          <h4 style="margin:0 0 8px 0">How it works</h4>
+          <ol style="padding-left:18px;margin:0;font-size:0.95rem">
+            <li>Pick level & tone.</li>
+            <li>Enter a short context.</li>
+            <li>Click Generate (or supply your Free API URL).</li>
+          </ol>
+          <p class="small muted">Tip: Advanced level creates longer, more creative comments. Use tokens field when you choose <em>Custom</em>.</p>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="card ad-slot" id="adBottom">Ad slot — mobile-friendly 300x100 placeholder</div>
+      </aside>
+    </main>
+
+    <footer>
+      Built with ♥ — Modify as needed. Ensure you comply with ad network policies when deploying.
+    </footer>
+  </div>
+
+<script>
+// Helper UUID generator
+function uuidv4(){
+  try{
+    return 'tool-'+([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
+  }catch(e){
+    return 'tool-'+Math.random().toString(36).slice(2,10);
+  }
+}
+
+// DOM refs
+const level = document.getElementById('level');
+const tokens = document.getElementById('tokens');
+const customRow = document.getElementById('customTokensRow');
+const tone = document.getElementById('tone');
+const contextInput = document.getElementById('context');
+const num = document.getElementById('num');
+const preview = document.getElementById('preview');
+const generateBtn = document.getElementById('generateBtn');
+const clearBtn = document.getElementById('clearBtn');
+const apiUrl = document.getElementById('apiUrl');
+const genUnik = document.getElementById('genUnik');
+const unikEl = document.getElementById('unik');
+const copyUnik = document.getElementById('copyUnik');
+const embed = document.getElementById('embed');
+const adCode = document.getElementById('adCode');
+const injectAds = document.getElementById('injectAds');
+const adTop = document.getElementById('adTop');
+const adBottom = document.getElementById('adBottom');
+const downloadBtn = document.getElementById('downloadBtn');
+
+// Toggle custom tokens visibility
+level.addEventListener('change',()=>{
+  customRow.style.display = level.value === 'custom' ? 'block' : 'none';
+});
+
+// Generate unique code
+genUnik.addEventListener('click',()=>{
+  const u = uuidv4();
+  unikEl.textContent = u;
+  embed.value = `<iframe src=\"https://example.com/ai-comment-generator?inst=${u}\" width=\"100%\" height=\"600\" frameborder=\"0\"></iframe>`;
+});
+
+copyUnik.addEventListener('click',()=>{
+  if(unikEl.textContent.trim()==='—') return alert('Generate a unique code first');
+  navigator.clipboard.writeText(unikEl.textContent).then(()=>{
+    alert('Unique code copied');
+  });
+});
+
+clearBtn.addEventListener('click',()=>{
+  preview.innerHTML = 'No comments yet — click <strong>Generate</strong>.';
+});
+
+// Local generator
+function localGenerateSingle(ctx, levelVal, toneVal){
+  const base = {
+    basic: ['Nice!', 'Looks good!', 'Great post.'],
+    standard: ['This is really helpful — thanks for sharing!', 'Excellent update, learned something new today.', 'Really well explained. Appreciated!'],
+    advanced: ['Brilliant breakdown — the details here are top-notch and actionable.', 'A thoughtful take with useful insights — bookmarked for later.', 'Love the clarity and depth — this is a must-read for anyone interested in the topic.']
+  };
+  const pick = base[levelVal] || base.standard;
+  const seed = pick[Math.floor(Math.random()*pick.length)];
+  let suffix = '';
+  if(ctx) suffix = ` — ${ctx}`;
+  if(toneVal === 'witty') return seed + suffix + ' 😄';
+  if(toneVal === 'enthusiastic') return seed + suffix + ' 🚀';
+  if(toneVal === 'concise') return seed.split('.')[0]+'.' + suffix;
+  return seed + suffix;
+}
+
+// Generate handler
+generateBtn.addEventListener('click', async ()=>{
+  const levelVal = level.value;
+  const toneVal = tone.value;
+  const ctx = contextInput.value.trim();
+  const n = parseInt(num.value,10);
+  preview.innerHTML = '<em>Generating...</em>';
+
+  const api = apiUrl.value.trim();
+  const results = [];
+  try{
+    if(api){
+      const payload = {level:levelVal,tone:toneVal,context:ctx,count:n};
+      const res = await fetch(api,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('API returned '+res.status);
+      const data = await res.json();
+      const arr = data.comments || data.results || data.data || data;
+      if(Array.isArray(arr)){
+        arr.slice(0,n).forEach(c=>results.push(typeof c === 'string' ? c : (c.text||JSON.stringify(c))));
+      } else if(typeof arr === 'string'){
+        results.push(arr);
+      } else {
+        results.push(JSON.stringify(arr));
+      }
+    } else {
+      for(let i=0;i<n;i++) results.push(localGenerateSingle(ctx, levelVal, toneVal));
+    }
+  } catch(err){
+    console.warn('API call failed:',err);
+    preview.innerHTML = '<div style="color:#b02121">API call failed or not reachable. Using local generator as fallback.</div>';
+    for(let i=0;i<n;i++) results.push(localGenerateSingle(ctx, level.value, toneVal));
+  }
+
+  const html = results.map(r=>`<div class=\"result-item\">${escapeHtml(r)}<div style=\"margin-top:8px;display:flex;gap:8px\"><button class=\"small-btn\" onclick=\"copyText(this)\">Copy</button><button class=\"small-btn\" onclick=\"useAsReply(this)\">Use as reply</button></div></div>`).join('');
+  preview.innerHTML += html;
+});
+
+// copy/use handlers
+window.copyText = function(el){
+  const text = el.parentElement.parentElement.firstChild.textContent;
+  navigator.clipboard.writeText(text).then(()=>alert('Comment copied'));
+}
+window.useAsReply = function(el){
+  const text = el.parentElement.parentElement.firstChild.textContent;
+  alert('You can now paste this into the target comment box:\n\n'+text);
+}
+
+function escapeHtml(str){
+  if(!str) return '';
+  return String(str).replace(/[&<>\"]/g, function(s){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s];
+  });
+}
+
+// Inject ad code into ad slots
+injectAds.addEventListener('click',()=>{
+  const code = adCode.value.trim();
+  if(!code) return alert('Paste your Eon Ads script first');
+  adTop.innerHTML = code;
+  adBottom.innerHTML = code;
+  alert('Ad code injected into placeholders. Make sure your ad network allows this embed.');
+});
+
+// Download HTML (snapshot)
+downloadBtn.addEventListener('click',()=>{
+  const doc = document.documentElement.outerHTML;
+  const element = document.createElement('a');
+  element.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(doc));
+  element.setAttribute('download', 'ai-comment-generator.html');
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+});
+
+// initialise
+unikEl.textContent = '—';
+
+</script>
+</body>
+</html>
